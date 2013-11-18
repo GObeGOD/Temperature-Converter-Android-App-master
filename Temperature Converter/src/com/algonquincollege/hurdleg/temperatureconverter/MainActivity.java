@@ -36,7 +36,6 @@ public class MainActivity extends Activity implements Observer {
 	private TemperatureModel      model;
 	private DoubleSeekBar         seekBarCelsius;
 	private DoubleSeekBar         seekBarFahrenheit;
-	// private DoubleSeekBar seekBarKelvin; 
 	private DoubleSeekBar seekBarKelvin;
 
 	@Override
@@ -70,9 +69,15 @@ public class MainActivity extends Activity implements Observer {
 		seekBarFahrenheit.setUnits( getResources().getString(R.string.units) );
 
 		// reference the Kelvin seekbar
-		//seekBarKelvin = (DoubleSeekBar) find...
+		
 		
        seekBarKelvin = (DoubleSeekBar) findViewById(R.id.seekBarKelvin);
+       seekBarKelvin.setHasMax(false);
+       seekBarKelvin.setMaxValue(TemperatureModel.MAX_KELVIN);
+       seekBarKelvin.setMinValue( TemperatureModel.MIN_KELVIN );
+       seekBarKelvin.setMinTitle( getResources().getString(R.string.kelvin) );
+       seekBarKelvin.setUnits( getResources().getString(R.string.kelvin) );
+       
 		// register an anonymous inner class as the event handler
 		// for when the seekbar changes
 		seekBarCelsius.registerOnChangeListenerMinSB( new OnSeekBarChangeListener() {
@@ -117,10 +122,9 @@ public class MainActivity extends Activity implements Observer {
 			}
 			
 			@Override
-			public void onProgressChanged(SeekBar seekBar, int progress,
-					boolean fromUser) {
+			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 				// TODO Auto-generated method stub
-				model.setKelvin( seekBarKelvin.getCurrentMinValue()+ 0.0F);
+				model.setKelvin( seekBarKelvin.getCurrentMinValue() + 0.0F);
 			}
 		});
 
@@ -220,6 +224,6 @@ public class MainActivity extends Activity implements Observer {
 
 	private void updateKelvin() {
 		// seekBarKelvin.setCurrentMinValue...
-		seekBarKelvin.setCurrentMinValue(Math.round(model.getKelvin()));
+		seekBarKelvin.setCurrentMinValue(Math.round(model.getKelvin()) );
 	}
 }
