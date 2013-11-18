@@ -36,7 +36,8 @@ public class MainActivity extends Activity implements Observer {
 	private TemperatureModel      model;
 	private DoubleSeekBar         seekBarCelsius;
 	private DoubleSeekBar         seekBarFahrenheit;
-	//TODO :: private DoubleSeekBar seekBarKelvin;
+	// private DoubleSeekBar seekBarKelvin; 
+	private DoubleSeekBar seekBarKelvin;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +70,9 @@ public class MainActivity extends Activity implements Observer {
 		seekBarFahrenheit.setUnits( getResources().getString(R.string.units) );
 
 		// reference the Kelvin seekbar
-		//TODO :: seekBarKelvin = (DoubleSeekBar) find...
-
+		//seekBarKelvin = (DoubleSeekBar) find...
+		
+       seekBarKelvin = (DoubleSeekBar) findViewById(R.id.seekBarKelvin);
 		// register an anonymous inner class as the event handler
 		// for when the seekbar changes
 		seekBarCelsius.registerOnChangeListenerMinSB( new OnSeekBarChangeListener() {
@@ -99,7 +101,28 @@ public class MainActivity extends Activity implements Observer {
 			}
 		} );
 
-	    //TODO :: seekBarKelvin.registerOn....
+	    // seekBarKelvin.registerOn....
+		seekBarKelvin.registerOnChangeListenerMinSB(new OnSeekBarChangeListener() {
+			
+			@Override
+			public void onStopTrackingTouch(SeekBar seekBar) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onProgressChanged(SeekBar seekBar, int progress,
+					boolean fromUser) {
+				// TODO Auto-generated method stub
+				model.setKelvin( seekBarKelvin.getCurrentMinValue()+ 0.0F);
+			}
+		});
 
 		// synch this activity with the model
 		this.updateActivity();
@@ -196,6 +219,7 @@ public class MainActivity extends Activity implements Observer {
 	}
 
 	private void updateKelvin() {
-		//TODO :: seekBarKelvin.setCurrentMinValue...
+		// seekBarKelvin.setCurrentMinValue...
+		seekBarKelvin.setCurrentMinValue(Math.round(model.getKelvin()));
 	}
 }
